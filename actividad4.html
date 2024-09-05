@@ -1,0 +1,59 @@
+<html>
+  <body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/jsx">
+      const app = document.getElementById("app");
+
+      function Task({ name }) {
+        return <li>{name}</li>;
+      }
+
+      function TaskList() {
+        const [tasks, setTasks] = React.useState([]);
+        const [newTask, setNewTask] = React.useState("");
+
+        function AddTask() {
+          if (newTask.trim() !== "") {
+            setTasks([...tasks, newTask]);
+            setNewTask("");
+          }
+        }
+
+        return (
+          <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
+            <h1>Lista del Supermercado</h1>
+            <input
+              type="text"
+              value={newTask}
+              onChange={(e) => setNewTask(e.target.value)}
+              placeholder="Nuevo producto"
+              style={{ marginRight: "15px" }}
+            />
+            <button onClick={AddTask} style={{ padding: "10px 15px" }}>
+              Agregar
+            </button>
+            <ul>
+              {tasks.map((task, index) => (
+                <Task key={index} name={task} />
+              ))}
+            </ul>
+          </div>
+        );
+      }
+
+      function App() {
+        return (
+          <div>
+            <TaskList />
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(app);
+      root.render(<App />);
+    </script>
+  </body>
+</html>
